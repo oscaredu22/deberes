@@ -1,0 +1,70 @@
+//persona.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;  
+
+namespace jugadores
+{
+    public class persona
+    {
+        private string nombre;
+        public string Nombre { get => nombre; set => nombre = value; }
+        
+        private string apellido;
+        public string Apellido { get => apellido; set => apellido = value; }
+        
+        private float estatura;
+        public float Estatura { get => estatura; set => estatura = value; }
+    }        
+}
+
+//jugador.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;  
+
+namespace jugadores
+{
+    public class jugador : persona
+    {
+        private int dorsal;
+        public int Dorsal { get => dorsal; set => dorsal = value; }
+        
+        private string nacionalidad;
+        public string Nacionalidad { get => nacionalidad; set => nacionalidad = value; }
+       
+        private string cedula;
+         public string Cedula { get => cedula; set => cedula = value; }
+    }
+}
+
+//program.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;  
+
+namespace jugadores
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            persona jugador;
+            jugador = new persona();
+            jugador.Nombre = "Oscar";
+            jugador.Apellido = "Salvador";
+            jugador.Estatura = 1;
+            Console.WriteLine(jugador.Nombre + " " + jugador.Apellido);
+            Console.WriteLine(jugador.Estatura);
+        }
+    }
+}
