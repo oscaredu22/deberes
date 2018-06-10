@@ -1,0 +1,32 @@
+# deberes
+
+create database factura;
+create table Personas(
+	id Serial,
+	nombre varchar (100),
+	apellido varchar (100),
+	domicilio varchar (200),
+	telefono varchar (10),
+	cedula varchar (10),
+	primary key (id)
+)
+create table entidadEmpresarial(
+	id Serial,
+	nombre varchar (100),
+	direccion varchar (100),
+	telefono varchar(10),
+	ciudad-pais varchat (50),
+	correoElectronico varchar(100),
+	primary key (id)
+)
+
+create table Productos(
+	id Serial,
+	nombre varchar (100),
+	codigo varchar (50),
+	marca varchar(10),
+	valor int,
+	cantidad int,
+	caracteristicas text,
+	primary key (id)
+)
