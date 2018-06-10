@@ -1,0 +1,62 @@
+# deberes
+
+// CONSULTAS E INGRESO DE VALORES A UNA TABLA
+
+create table Personas
+(
+	nombre1 varchar(50),
+	nombre2 varchar(50),
+	apellido1 varchar(50),
+	apellido2 varchar(50),
+	fechaNacimiento date,
+	genero varchar(20),
+	notaBDD float,
+	notaPoo float,
+	cedula varchar(10)
+) 
+
+
+--insertamos valores
+INSERT INTO public.personas(
+	nombre1, nombre2, apellido1, apellido2, fechanacimiento, genero, notabdd, notapoo, cedula)
+	VALUES ('David','Fernando', 'Quinaluisa','Toaquiza', '1996/06/07','masculino', '10','6.5', '1725648475'),
+	 ('Christian','Alexander', 'Freire','Pico', '1998/04/20','masculino', '10','8', '1726348912'),
+	 ('Oscar','Eduardo', 'Salvador','Mosquera', '1998/06/03','masculino', '10','7', '1725393738'),
+	 ('Gorky', 'Lui','Estrella','Alvarez', '1990/04/20','masculino', '8','9', '1725548987'),
+	 ('Alanys','Fernanda', 'Rojas','Borja', '1999/05/12','femenino', '10','5', '1726253645'),
+	 ('Randy','Wilson', 'Cabrera','Rodriguez', '1997/08/30', 'masculino','7','7', '1723458921'),
+	 ('Lizbeth','Carol', 'Caiza','Torres', '1998/01/10','femenino', '9','6', '1725379810'),
+	 ('Henry','Jesus', 'Montenegro','Alvarez', '1997/10/26','masculino', '5','10', '1710145632'),
+	 ('Alejandra','Belen', 'Sarauz','Garcia', '1998/09/19','femenino', '10','4', '1726212529'),
+	 ('Alex','Dario', 'Calispa','Salazar', '1995/02/20','masculino', '10','5', '1725648745'),
+	 ('José','Mauricio', 'Aguirre','Reyes', '1997/10/05','masculino', '3','6', '1725363937'),
+	 ('Michelle','Carmiña', 'Quilca','Duarte', '1998/12/31','femenino', '4','7', '1725642023'),
+	 ('Marcelo','Ivan', 'Salvador','Mosquera', '1989/02/26','masculino', '7.5','3', '1725548970'),
+	 ('Fernando','Andres', 'Salvador','Mosquera', '1986/12/12','masculino', '6.6','9', '1729325691');
+	 
+--consultar la tabla
+SELECT * FROM personas;
+
+--seleccionar la cedula, el nombre y el apellido
+SELECT nombre1, apellido1, cedula FROM personas;
+
+--seleccionar la maxima nota y a quien le pertenece
+SELECT * FROM personas WHERE notaBDD = (SELECT max(notaBDD) FROM personas);
+
+--selecionar la minima nota y a quien le pertenece
+SELECT * FROM personas WHERE notaBDD = (SELECT min(notaBDD) FROM personas);
+
+--ordenar los registros por apellido
+SELECT apellido1 FROM personas ORDER BY apellido1 ASC;
+
+--cuantos registros hay
+SELECT COUNT(*) FROM personas;
+
+--cuantos son masculinos
+SELECT COUNT(*) FROM personas WHERE genero = 'masculino';
+
+--cuantos son femeninos
+SELECT COUNT(*) FROM personas WHERE genero = 'femenino';
+
+--5 mejores estudiantes
+SELECT nombre1, apellido1, notaBDD FROM personas ORDER BY notaBDD DESC LIMIT 5;
