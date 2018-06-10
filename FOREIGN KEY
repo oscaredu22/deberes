@@ -1,0 +1,60 @@
+# deberes
+
+-- Database: relaciones
+
+-- DROP DATABASE relaciones;
+
+CREATE DATABASE relaciones
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Ecuador.1252'
+    LC_CTYPE = 'Spanish_Ecuador.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+
+CREATE TABLE persona
+(
+	id int NOT NULL,
+	nombre varchar(50) NOT NULL,
+	apellido varchar(50) NOT NULL,
+	fechaNacimiento date NOT NULL,
+	cedula varchar(10) NOT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE jugador
+(
+	id int NOT NULL,
+	dorsal int NOT NULL,
+	estatura float NOT NULL,
+	nacionalidad varchar(50) NOT NULL,
+	FOREIGN KEY(id) references persona(id)
+);
+
+--valores a la tabla persona.
+INSERT INTO public.persona(
+	id, nombre, apellido, fechanacimiento, cedula)
+	VALUES (1, 'Oscar', 'Salvador', '1998/06/03', '1725393738'),
+	       (2, 'Marcelo', 'Salvador', '1989/04/13', '1726126520'),
+		   (3, 'David', 'Quinaluisa', '1996/06/07', '1729453273');
+
+--valores a la tabla jugador.		   
+INSERT INTO public.jugador(
+	id, dorsal, estatura, nacionalidad)
+	VALUES (1, '22', '1.75', 'Ecuador'),
+	       (2, '23', '1.76', 'Ecuador'),
+		   (3, '7', '1.75', 'Ecuador');
+		   
+SELECT * FROM persona;
+SELECT * FROM jugador;
+
+ALTER TABLE persona
+ADD codigoJugador integer
+
+--foreing key.
+ALTER TABLE persona
+ADD CONSTRAINT  fk
+FOREIGN KEY (codigoJugador)
+REFERENCES jugador(id)
