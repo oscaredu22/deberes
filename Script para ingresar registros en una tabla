@@ -1,0 +1,9 @@
+# deberes
+
+<?php
+    $conexion  = psql_connect ("localhost","oscar","postgres");
+    psql_connect_db("academico",$conexion);
+    $sql = "INSERT INTO public.personas(nombre1, nombre2, apellido1, apellido2, fechanacimiento, genero, notabdd, notapoo, cedula)
+        VALUES ('Oscar','Eduardo', 'Salvador','Mosquera', '1998/06/03','masculino', '10','6.5', '1725393738'),";
+    psql_query($sql);
+?>
