@@ -1,0 +1,179 @@
+# deberes
+
+//BASE DE DATOS
+
+-- Database: inventario
+
+-- DROP DATABASE inventario;
+
+CREATE DATABASE inventario
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Ecuador.1252'
+    LC_CTYPE = 'Spanish_Ecuador.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+CREATE TABLE personas
+(
+	"idPersona" int NOT NULL,
+	nombre varchar(30) NOT NULL,
+	apellido varchar(30) NOT NULL,
+	teléfono varchar(10) NOT NULL,
+	dirección varchar(20) NOT NULL,
+	cedula varchar(10) NOT NULL,
+	email varchar(30) NOT NULL,
+	CONSTRAINT "idPersona" PRIMARY KEY ("idPersona")
+);
+
+CREATE TABLE personaNatural
+(
+	"idPersonaNatural" int NOT NULL,
+	"persona_idPersona" int NOT NULL,
+	cédula varchar(10) NOT NULL,
+	CONSTRAINT "idPersonaNatural" PRIMARY KEY ("idPersonaNatural"),
+	CONSTRAINT "persona_idPersona" FOREIGN KEY ("persona_idPersona")
+	REFERENCES "personas" ("idPersona")
+);
+
+CREATE TABLE personasJuridicas
+(
+	"idPersonaJuridica" int NOT NULL,
+	"persona_idPersona" int NOT NULL,
+	ruc varchar(20) NOT NULL,
+	CONSTRAINT "idPersonaJuridica" PRIMARY KEY ("idPersonaJuridica"),
+	CONSTRAINT "persona_idPersona" FOREIGN KEY ("persona_idPersona")
+	REFERENCES "personas" ("idPersona")
+);
+
+CREATE TABLE productos
+(
+	"idProducto" int NOT NULL,
+	nombre varchar(50) NOT NULL,
+	marca varchar(20) NOT NULL,
+	fechaCaducidad date NOT NULL,
+	código varchar(20) NOT NULL,
+	peso float NULL,
+	tipoProducto varchar(50) NOT NULL,
+	unidades int NOT NULL,
+	precio decimal NOT NULL,
+	CONSTRAINT "idProducto" PRIMARY KEY ("idProducto")
+);
+
+CREATE TABLE ingresos
+(
+	"idIngreso" int NOT NULL,
+	nombreProductoIngresado varchar(50) NOT NULL,
+	fechaIngreso date NOT NULL,
+	productosIngresados int NOT NULL,
+	CONSTRAINT "idIngreso" PRIMARY KEY ("idIngreso")
+);
+
+CREATE TABLE devoluciones
+(
+	"idDevolucion" int NOT NULL,
+	"producto_idProducto" int NOT NULL,
+	nombreProductoDevuelto varchar(50) NOT NULL,
+	calidad bool NOT NULL,
+	fechaDevolución date NOT NULL,
+	CONSTRAINT "idDevolucion" PRIMARY KEY ("idDevolucion"),
+	CONSTRAINT "producto_idProducto" FOREIGN KEY ("producto_idProducto")
+	REFERENCES "productos" ("idProducto") 
+);
+
+CREATE TABLE proveedores
+(
+	"idProveedor" int NOT NULL,
+	"personasJuridicas_idPersonaJuridica" int NOT NULL,
+	CONSTRAINT "idProveedor" PRIMARY KEY ("idProveedor"),
+	CONSTRAINT "personasJuridicas_idPersonaJuridica" FOREIGN KEY ("personasJuridicas_idPersonaJuridica")
+	REFERENCES "personasJuridicas" ("idPersonaJuridica")
+);
+
+CREATE TABLE egresos
+(
+	"idEgreso" int NOT NULL,
+	"producto_idProducto" int NOT NULL,
+	fechaEgreso date NOT NULL,
+	unidadesSobrantes int NOT NULL,
+	CONSTRAINT "idEgreso" PRIMARY KEY ("idEgreso"),
+	CONSTRAINT "producto_idProducto" FOREIGN KEY ("producto_idProducto")
+	REFERENCES "productos" ("idProducto")
+);
+
+CREATE TABLE facturas
+(
+	"idFactura" int NOT NULL,
+	nombreEmpresa varchar(50) NOT NULL,
+	nombreCliente varchar(50) NOT NULL,
+	dirección varchar(20) NOT NULL,
+	cédula varchar(10) NOT NULL,
+	teléfono varchar(20) NOT NULL,
+	iva decimal NOT NULL,
+	total decimal NOT NULL,
+	CONSTRAINT "idFactura" PRIMARY KEY ("idFactura")
+);
+
+CREATE TABLE detallesFactura
+(
+	"idDetalleFactura" int NOT NULL,
+	"producto_idProducto" int NOT NULL,
+	"factura_idFactura" int NOT NULL,
+	precio decimal NOT NULL,
+	unidad int NOT NULL,
+	CONSTRAINT "idDetalleFactura" PRIMARY KEY ("idDetalleFactura"),
+	CONSTRAINT "producto_idProducto" FOREIGN KEY ("producto_idProducto")
+	REFERENCES "productos" ("idProducto"),
+	CONSTRAINT "factura_idFactura" FOREIGN KEY ("factura_idFactura")
+	REFERENCES "facturas" ("idFactura")
+);
+
+CREATE TABLE clientes
+(
+	"idCliente" int NOT NULL,
+	"persona_idPersona" int NOT NULL,
+	CONSTRAINT "idCliente" PRIMARY KEY ("idCliente"),
+	CONSTRAINT "persona_idPersona" FOREIGN KEY ("persona_idPersona")
+	REFERENCES "personas" ("idPersona")
+);
+
+CREATE TABLE empleados
+(
+	"idEmpleado" int NOT NULL,
+	"persona_idPersona" int NOT NULL,
+	"factura_idFactura" int NOT NULL,
+	nombreCompraProducto varchar(50) NOT NULL,
+	CONSTRAINT "idEmpleado" PRIMARY KEY ("idEmpleado"),
+	CONSTRAINT "persona_idPersona" FOREIGN KEY ("persona_idPersona")
+	REFERENCES "personas" ("idPersona"),
+	CONSTRAINT "factura_idFactura" FOREIGN KEY ("factura_idFactura")
+	REFERENCES "facturas" ("idFactura")
+);
+
+CREATE TABLE bodegas
+(
+	"idBodega" int NOT NULL,
+	"producto_idProducto" int NOT NULL,
+	nombreBodega varchar(50) NOT NULL,
+	ubicaciónBodega varchar(100) NOT NULL,
+	teléfono varchar(10) NOT NULL,
+	email varchar(20) NOT NULL,
+	unidades int NOT NULL,
+	CONSTRAINT "idBodega" PRIMARY KEY ("idBodega"),
+	CONSTRAINT "producto_idProducto" FOREIGN KEY ("producto_idProducto")
+	REFERENCES "productos" ("idProducto")
+);
+
+CREATE TABLE proveedoresPorBodega
+(
+	"idProveedorPorBodega" int NOT NULL,
+	"bodega_idBodega" int NOT NULL,
+	"producto_idProducto" int NOT NULL,
+	cantidad int NOT NULL,
+	CONSTRAINT "idProveedorPorBodega" PRIMARY KEY ("idProveedorPorBodega"),
+	CONSTRAINT "bodega_idBodega" FOREIGN KEY ("bodega_idBodega")
+	REFERENCES "bodegas" ("idBodega"),
+	CONSTRAINT "producto_idProducto" FOREIGN KEY ("producto_idProducto")
+	REFERENCES "productos" ("idProducto")
+);
