@@ -1,0 +1,36 @@
+# deberes
+
+//Programacion Orientada a Objetos
+
+using System;
+
+namespace personaje
+{
+    public class animales : perro
+    {
+        bool perro.caminar()
+        {
+            Console.WriteLine("el perro esta caminando");
+            throw new NotImplementedException();
+        }
+
+        bool perro.correr()
+        {
+            Console.WriteLine("el perro esta corriendo");
+            throw new NotImplementedException();
+        }
+
+        bool perro.ladrar()
+        {
+            Console.WriteLine("el perro comenzo a ladrar");
+            throw new NotImplementedException();
+        }
+    }
+}
+
+public interface perro
+{
+    bool ladrar();
+    bool caminar();
+    bool correr(); 
+}
