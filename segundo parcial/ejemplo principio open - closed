@@ -1,0 +1,48 @@
+# deberes
+
+using System;
+using System.Collections.Generic;
+
+//PROGRAMACION ORIENTADA A OBJETOS
+
+//EJEMPLO PRINCIPIO OPEN - CLOSED
+
+namespace openClosed
+{
+    //creamos clase abstracta con sus campos
+    public abstract class Persona{
+        public string Nombre{ get; set; }
+        public string Apellido{ get; set; }
+        public DateTime fechaNacimiento { get; set; }
+
+        //metodo de la clase
+        public abstract void Profesion();
+
+    }
+
+    //herencia
+    public class Abogado : Persona
+    {
+        public override void Profesion()
+        {
+            //TODO
+        }
+    }
+    public class Programador : Persona
+    {
+        public override void Profesion()
+        {
+            //TODO
+        }
+    }
+
+    //listado de las personas con su profesion
+    public class PersonasProfesion
+    {
+        public List<Persona> Personas { get; set; }
+        public void Profesiones()
+        {
+            //TODO
+        }
+    }
+}
